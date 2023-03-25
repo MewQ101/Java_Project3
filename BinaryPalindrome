@@ -1,0 +1,47 @@
+public class BinaryPalindrome {
+    public static void main(String[] args) {
+        Timer timer = new Timer(); // створюємо таймер
+        timer.start(); // запуск таймера
+        for (int i = -2147483647; i <= 2147483647; i++) {
+            if (binPal(i)) {
+                System.out.println(i + " : " + toBinar(i)); // вивід числа
+            }
+            if (i == 2147483647) { // зупинка при максимальному значенні
+                break;
+            }
+        }
+        timer.stop(); // зупиняємо таймер після виконання циклу
+        long seconds = timer.getSeconds(); // отримуємо секунди з таймера
+        long minutes = seconds / 60; // перевід секунд в хвилини
+        System.out.println("Программа виконалась за " + minutes + " хв. " + (seconds - minutes * 60) + " сек.");// вивід
+        // часу
+    }
+
+    public static boolean binPal(int num) { // чи є двійкове число палендромом
+        int revNum = revBits(num);
+        return num == revNum;
+    }
+
+    public static int revBits(int num) { // перевертання числа
+        int revNum = 0;
+        for (int i = 0; i < 32; i++) {
+            revNum <<= 1; // здивг бітів і присваювання
+            if ((num & 1) == 1) {
+                revNum |= 1;
+            }
+            num >>= 1;
+        }
+        return revNum;
+    }
+
+    public static String toBinar(int num) { // число в двійковий код
+        char[] binaryChars = new char[32];
+        int i = 0;
+        while (i < 32) {
+            binaryChars[31 - i++] = (char) ((num & 1) + '0');
+            num >>>= 1; // здвиг з нулями й присваювання
+        }
+        return new String(binaryChars);
+    }
+
+}
